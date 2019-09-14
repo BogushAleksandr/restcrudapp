@@ -48,11 +48,29 @@ public class EmployeeRepository {
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
                 "update tblEmployees set empName = ?, empActive = ?, emp_dpID = ? where empID = ?");
         preparedStatement.setInt(4, employee.getId());
-        preparedStatement.setString(1,employee.getFirstName());
-        preparedStatement.setBoolean(2,employee.isActive());
-        preparedStatement.setInt(3,employee.getDepartmentID());
+        preparedStatement.setString(1, employee.getFirstName());
+        preparedStatement.setBoolean(2, employee.isActive());
+        preparedStatement.setInt(3, employee.getDepartmentID());
         return preparedStatement.executeUpdate();
 
+    }
+
+    public String createEmployee(Employee employee) throws SQLException {
+        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
+                "insert into tblEmployees (empName, empActive, emp_dpID) VALUES (?,?,?)");
+        preparedStatement.setString(1, employee.getFirstName());
+        preparedStatement.setBoolean(2, employee.isActive());
+        preparedStatement.setInt(3, employee.getDepartmentID());
+        preparedStatement.executeUpdate();
+        return "201";
+    }
+
+    public String deleteEmployee(Employee employee) throws SQLException {
+        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
+                "delete from tblEmployees  where empID = ?");
+        preparedStatement.setInt(1,employee.getId());
+        preparedStatement.executeUpdate();
+        return "204";
     }
 
 }

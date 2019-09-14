@@ -23,10 +23,20 @@ public class EmployeeController {
     public List<Employee> employeeAll() throws SQLException {
         return employeeRepository.findAllEmployee();
     }
+
     @PutMapping("/editEmployee")
     public int editEmployee(@RequestBody Employee employee) throws SQLException {
         return employeeRepository.editEmployee(employee);
     }
 
+    @PostMapping("/createEmployee")
+    public String createEmployee(@RequestBody Employee employee) throws SQLException {
+        return employeeRepository.createEmployee(employee);
+    }
+
+    @DeleteMapping("/deleteEmployee")
+    public String deleteEmployee(@RequestBody Employee employee) throws SQLException {
+        return employeeRepository.deleteEmployee(employee);
+    }
 
 }
