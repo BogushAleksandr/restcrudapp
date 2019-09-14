@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class DepartmentsRepository {
@@ -29,5 +31,16 @@ public class DepartmentsRepository {
             return new Department(entityId, entityName);
         }
         return null;
+    }
+
+    public List<Department> findAllDepartments() throws SQLException {
+        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement("select * from tblDepartments");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Department> listDepartments = new ArrayList<>();
+        while (resultSet.next()) {
+            Department department = new Department(resultSet.getInt(1),resultSet.getString(2));
+            listDepartments.add(department);
+        }
+        return listDepartments;
     }
 }

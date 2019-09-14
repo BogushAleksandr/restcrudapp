@@ -1,8 +1,6 @@
 package com.ua.SPAREST.backside.restcrudapp.entity;
 
 public class Department {
-
-
     private int id;
     private String name;
 
