@@ -15,7 +15,7 @@ public class EmployeeRepository {
     @Autowired
     private SqlExecutor sqlExecutor;
 
-    public Employee findByPk(int id) throws SQLException {
+    private Employee resultId(int id) throws SQLException {
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
                 "select * from tblEmployees where empID = ?");
         preparedStatement.setInt(1, id);
@@ -29,8 +29,31 @@ public class EmployeeRepository {
         } else return null;
     }
 
+    private List<Employee> resultSearchEmployee(String name) throws SQLException {
+        List<Employee> listEmployee = new ArrayList<>();
+        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
+                "select * from tblEmployees where empName like ?");
+        preparedStatement.setString(1,name + '%');
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Employee employee = new Employee(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getBoolean(3),
+                    resultSet.getInt(4)
+            );
+            listEmployee.add(employee);
+        }
+        return listEmployee;
+    }
+
+    public Employee findByPk(int id) throws SQLException {
+        return resultId(id);
+    }
+
     public List<Employee> findAllEmployee() throws SQLException {
-        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement("select * from tblEmployees");
+        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
+                "select * from tblEmployees");
+
         ResultSet resultSet = preparedStatement.executeQuery();
         List<Employee> listEmployee = new ArrayList<>();
         while (resultSet.next()) {
@@ -68,9 +91,14 @@ public class EmployeeRepository {
     public String deleteEmployee(Employee employee) throws SQLException {
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
                 "delete from tblEmployees  where empID = ?");
-        preparedStatement.setInt(1,employee.getId());
+        preparedStatement.setInt(1, employee.getId());
         preparedStatement.executeUpdate();
         return "204";
+    }
+
+    public List<Employee> searchNameEmployee(String name) throws SQLException {
+        return resultSearchEmployee(name);
+
     }
 
 }

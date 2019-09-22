@@ -39,4 +39,9 @@ public class EmployeeController {
         return employeeRepository.deleteEmployee(employee);
     }
 
+    @GetMapping("/search")
+    public List<Employee>searchEmployee(@RequestParam String name) throws SQLException{
+        return employeeRepository.searchNameEmployee(name);
+    }
+
 }
