@@ -1,3 +1,9 @@
+"Installation"
+
+1) git clone https://github.com/BogushAleksandr/restcrudapp.git && cd restcrudapp
+2) mvn clean test && mvn spring-boot:run
+
+
                                     "Tusk"
 "Implement SPA (https://i-msdn.sec.s-msft.com/dynimg/IC690875.png) with authentication
 page and one more page + RestAPI on backend for CRUD operations on one table."
@@ -20,7 +26,6 @@ page and one more page + RestAPI on backend for CRUD operations on one table."
    2. So, paging is essential part of this test task.
    3. Please use MySQL for task.
    4. Don’t use Hibernate
-                                  "Work"
 
 
 
