@@ -3,6 +3,8 @@ package com.ua.SPAREST.backside.restcrudapp.repository;
 import com.ua.SPAREST.backside.restcrudapp.config.SqlExecutor;
 import com.ua.SPAREST.backside.restcrudapp.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -18,6 +20,10 @@ public class DepartmentsRepository {
     @Autowired
     private SqlExecutor sqlExecutor;
 
+   /* @Autowired
+    private JdbcTemplate jdbcTemplate;*/
+
+
     public Department findByPk(int pk) throws SQLException {
         Statement stmt = sqlExecutor.getConnection().createStatement();
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
@@ -30,8 +36,15 @@ public class DepartmentsRepository {
             String entityName = resultSet.getString(2);
             return new Department(entityId, entityName);
         }
-        return null;
+       return null;
     }
+
+    /*public Department findByPk(int pk) {
+            String sql = "select * from tblDepartments where dpID = ?";
+        return jdbcTemplate.query(sql, (rs) -> new Department(rs.getInt(p)));
+      //  return department;
+    }*/
+
 
     public List<Department> findAllDepartments() throws SQLException {
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement("select * from tblDepartments");

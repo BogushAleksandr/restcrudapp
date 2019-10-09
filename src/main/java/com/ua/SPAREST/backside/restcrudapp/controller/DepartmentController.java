@@ -11,13 +11,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/hello")
+@RequestMapping(path = "/hel")
 public class DepartmentController {
 
     @Autowired
     private DepartmentsRepository departmentsRepository;
 
-    @GetMapping
+    @GetMapping(path = "/wel")
     public Department welcome() throws SQLException {
         return departmentsRepository.findByPk(2);
     }

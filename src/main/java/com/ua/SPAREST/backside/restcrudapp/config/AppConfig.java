@@ -7,8 +7,4 @@ import java.sql.SQLException;
 
 @Configuration
 public class AppConfig {
-    @Bean
-    public SqlExecutor sqlExecutor() throws SQLException, ClassNotFoundException {
-        return new SqlExecutor();
-    }
 }

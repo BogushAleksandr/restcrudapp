@@ -1,16 +1,21 @@
 package com.ua.SPAREST.backside.restcrudapp.config;
 
-import java.sql.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+@Component
 public class SqlExecutor {
-
-    private String dbUrl = "jdbc:mysql://localhost:3306/ukeesstask?serverTimezone=Europe/Kiev";
-    private String dbUsername = "root";
-    private String dbPassword = "217!KaSGo!971";
-
     private final Connection connection;
 
-    public SqlExecutor() throws ClassNotFoundException, SQLException {
+    public SqlExecutor(
+            @Value("${spring.datasource.url}") String dbUrl,
+            @Value("${spring.datasource.username}") String dbUsername,
+            @Value("${spring.datasource.password}") String dbPassword
+    ) throws SQLException {
         this.connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
     }
 
