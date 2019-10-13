@@ -40,8 +40,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    public List<Employee>searchEmployee(@RequestParam String name) throws SQLException{
-        return employeeRepository.searchNameEmployee(name);
+    public List<Employee> searchEmployee(@RequestParam String name) throws SQLException {
+        if (name.isBlank()) {
+            return null;
+        } else
+            return employeeRepository.searchNameEmployee(name);
     }
 
 }

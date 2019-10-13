@@ -9,14 +9,19 @@ import java.sql.SQLException;
 
 @Component
 public class SqlExecutor {
-    private final Connection connection;
+    private Connection connection;
 
     public SqlExecutor(
             @Value("${spring.datasource.url}") String dbUrl,
             @Value("${spring.datasource.username}") String dbUsername,
             @Value("${spring.datasource.password}") String dbPassword
     ) throws SQLException {
-        this.connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+        try {
+            this.connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+        }catch (SQLException ex){
+            ex.getMessage();
+            connection.setAutoCommit(true);
+        }
     }
 
     public Connection getConnection() {
