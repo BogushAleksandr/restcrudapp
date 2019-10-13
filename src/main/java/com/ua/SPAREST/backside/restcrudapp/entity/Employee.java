@@ -33,15 +33,15 @@ public class Employee {
         return active;
     }
 
-    public void setActive(boolean active) {
+   /* public void setActive(boolean active) {
         this.active = active;
-    }
+    }*/
 
     public int getDepartmentID() {
         return departmentID;
     }
 
-    public void setDepartmentID(int departmentID) {
+ /*   public void setDepartmentID(int departmentID) {
         this.departmentID = departmentID;
-    }
+    }*/
 }

@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class EmployeeRepository {
@@ -33,7 +34,7 @@ public class EmployeeRepository {
         List<Employee> listEmployee = new ArrayList<>();
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
                 "select * from tblEmployees where empName like ?");
-        preparedStatement.setString(1,name + '%');
+        preparedStatement.setString(1, name + '%');
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             Employee employee = new Employee(resultSet.getInt(1),
