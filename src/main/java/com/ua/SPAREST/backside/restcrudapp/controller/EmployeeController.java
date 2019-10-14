@@ -20,8 +20,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/allEmployee")
-    public List<Employee> employeeAll() throws SQLException {
-        return employeeRepository.findAllEmployee();
+    public List<Employee> employeeAll(@RequestParam int page, @RequestParam int pageSize) throws SQLException {
+        return employeeRepository.findAllEmployee(page,pageSize);
     }
 
     @PutMapping("/editEmployee")

@@ -21,9 +21,13 @@ public class EmployeeRepository {
         return resultId(id);
     }
 
-    public List<Employee> findAllEmployee() throws SQLException {
+    public List<Employee> findAllEmployee(int page, int pageSize) throws SQLException {
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
-                "select tbl.empID, tbl.empName, tbl.empActive, tbl.emp_dpID from tblEmployees tbl");
+                "select tbl.empID, tbl.empName, tbl.empActive, tbl.emp_dpID from tblEmployees tbl " +
+                        "order by tbl.empID asc limit ? offset ?");
+        //pagination
+        preparedStatement.setInt(1, pageSize);
+        preparedStatement.setInt(2,(page - 1) * pageSize);
         try {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Employee> listEmployee = new ArrayList<>();

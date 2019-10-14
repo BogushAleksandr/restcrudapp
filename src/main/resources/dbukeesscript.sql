@@ -30,3 +30,6 @@ insert into tblEmployees (empName, empActive, emp_dpID) VALUES ("Lisa",1,1);
 insert into tblEmployees (empName, empActive, emp_dpID) VALUES ("Erik",1,2);
 insert into tblEmployees (empName, empActive, emp_dpID) VALUES ("Don",1,3);
 insert into tblEmployees (empName, empActive, emp_dpID) VALUES ("Peter",0,1);
+
+select tbl.empID, tbl.empName, tbl.empActive, tbl.emp_dpID from tblEmployees tbl order by tbl.empID asc
+    LIMIT 2 offset 1;
