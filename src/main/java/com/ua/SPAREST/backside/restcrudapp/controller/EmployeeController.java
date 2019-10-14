@@ -30,17 +30,19 @@ public class EmployeeController {
     }
 
     @PostMapping("/createEmployee")
-    public String createEmployee(@RequestBody Employee employee) throws SQLException {
+    public Employee createEmployee(@RequestBody Employee employee) throws SQLException {
+        System.out.println(employee.getFirstName());
+
         return employeeRepository.createEmployee(employee);
     }
 
     @DeleteMapping("/deleteEmployee")
-    public String deleteEmployee(@RequestBody Employee employee) throws SQLException {
-        return employeeRepository.deleteEmployee(employee);
+    public Employee deleteEmployee(@RequestParam int id) throws SQLException {
+        return employeeRepository.deleteEmployee(id);
     }
 
     @GetMapping("/search")
-    public List<Employee> searchEmployee(@RequestParam String name) throws SQLException {
+    public List<Employee> searchEmployee(@RequestParam String name) {
         if (name.isBlank()) {
             return null;
         } else

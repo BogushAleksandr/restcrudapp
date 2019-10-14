@@ -23,7 +23,7 @@ public class EmployeeRepository {
 
     public List<Employee> findAllEmployee() throws SQLException {
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
-                "select * from tblEmployees");
+                "select tbl.empID, tbl.empName, tbl.empActive, tbl.emp_dpID from tblEmployees tbl");
         try {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Employee> listEmployee = new ArrayList<>();
@@ -62,37 +62,39 @@ public class EmployeeRepository {
     }
 
 
-    public String createEmployee(Employee employee) throws SQLException {
-        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
-                "insert into tblEmployees (empName, empActive, emp_dpID) VALUES (?,?,?)");
-        try {
+    public Employee createEmployee(Employee employee) throws SQLException {
+        try (PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
+                "insert into tblEmployees (empName, empActive, emp_dpID) VALUES (?,?,?)")) {
+
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setBoolean(2, employee.isActive());
             preparedStatement.setInt(3, employee.getDepartmentID());
             preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return findEmployeeAfterCreate(employee.getFirstName());
+
         } catch (SQLException e) {
             e.getMessage();
-        } finally {
-            preparedStatement.close();
         }
-        return "201";
+        return null;
     }
 
-    public String deleteEmployee(Employee employee) throws SQLException {
+    public Employee deleteEmployee(int id) throws SQLException {
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
                 "delete from tblEmployees  where empID = ?");
         try {
-            preparedStatement.setInt(1, employee.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
+            return resultId(id);
         } catch (SQLException e) {
             e.getMessage();
         } finally {
             preparedStatement.close();
         }
-        return "204";
+        return null;
     }
 
-    public List<Employee> searchNameEmployee(String name){
+    public List<Employee> searchNameEmployee(String name) {
         try {
             return resultSearchEmployee(name);
         } catch (SQLException e) {
@@ -104,7 +106,7 @@ public class EmployeeRepository {
 
     private Employee resultId(int id) throws SQLException {
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
-                "select * from tblEmployees where empID = ?");
+                "select tbl.empID, tbl.empName, tbl.empActive, tbl.emp_dpID from tblEmployees tbl where empID = ?");
         preparedStatement.setInt(1, id);
         try {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -129,7 +131,7 @@ public class EmployeeRepository {
         List<Employee> listEmployee = new ArrayList<>();
 
         PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
-                "select * from tblEmployees where empName like ?");
+                "select tbl.empID, tbl.empName, tbl.empActive, tbl.emp_dpID  from tblEmployees tbl where empName like ?");
 
         preparedStatement.setString(1, name + '%');
         try {
@@ -148,6 +150,24 @@ public class EmployeeRepository {
             e.getMessage();
         } finally {
             preparedStatement.close();
+        }
+        return null;
+    }
+
+    private Employee findEmployeeAfterCreate(String name) throws SQLException {
+        try (PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
+                "select tbl.empID, tbl.empName, tbl.empActive, tbl.emp_dpID  from tblEmployees tbl where empName = ?")) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2),
+                        resultSet.getBoolean(3),
+                        resultSet.getInt(4));
+                return employee;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
         return null;
     }

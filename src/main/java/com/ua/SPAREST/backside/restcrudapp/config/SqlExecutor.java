@@ -19,8 +19,8 @@ public class SqlExecutor {
         try {
             this.connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
         }catch (SQLException ex){
-            ex.getMessage();
-            connection.setAutoCommit(true);
+
+           ex.getMessage();
         }
     }
 
