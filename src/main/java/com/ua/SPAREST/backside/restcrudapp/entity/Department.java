@@ -1,7 +1,13 @@
 package com.ua.SPAREST.backside.restcrudapp.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "All details about the Deparment.")
 public class Department {
+    @ApiModelProperty(notes = "ID of Department", name = "id")
     private int id;
+    @ApiModelProperty(notes = "Name of Department", name = "name")
     private String name;
 
 

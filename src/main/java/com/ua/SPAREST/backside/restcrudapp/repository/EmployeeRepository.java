@@ -27,7 +27,7 @@ public class EmployeeRepository {
                         "order by tbl.empID asc limit ? offset ?");
         //pagination
         preparedStatement.setInt(1, pageSize);
-        preparedStatement.setInt(2,(page - 1) * pageSize);
+        preparedStatement.setInt(2, (page - 1) * pageSize);
         try {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Employee> listEmployee = new ArrayList<>();

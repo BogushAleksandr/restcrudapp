@@ -19,28 +19,40 @@ public class DepartmentsRepository {
     private SqlExecutor sqlExecutor;
 
     public Department findByPk(int pk) throws SQLException {
-        Statement stmt = sqlExecutor.getConnection().createStatement();
-        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
-                "select * from tblDepartments where dpID = ?");
-        preparedStatement.setInt(1, pk);
+        try {
+            Statement stmt = sqlExecutor.getConnection().createStatement();
+            PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
+                    "select tD.dpID, tD.dpName from tblDepartments tD where dpID = ?");
+            preparedStatement.setInt(1, pk);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            int entityId = resultSet.getInt(1);
-            String entityName = resultSet.getString(2);
-            return new Department(entityId, entityName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int entityId = resultSet.getInt(1);
+                String entityName = resultSet.getString(2);
+                preparedStatement.close();
+                return new Department(entityId, entityName);
+            }
+        } catch (SQLException e) {
+            e.getMessage();
         }
-       return null;
+        return null;
     }
 
     public List<Department> findAllDepartments() throws SQLException {
-        PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement("select * from tblDepartments");
-        ResultSet resultSet = preparedStatement.executeQuery();
-        List<Department> listDepartments = new ArrayList<>();
-        while (resultSet.next()) {
-            Department department = new Department(resultSet.getInt(1),resultSet.getString(2));
-            listDepartments.add(department);
+        try {
+            PreparedStatement preparedStatement = sqlExecutor.getConnection().prepareStatement(
+                    "select tD.dpID, tD.dpName from tblDepartments tD order by tD.dpID");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Department> listDepartments = new ArrayList<>();
+            while (resultSet.next()) {
+                Department department = new Department(resultSet.getInt(1), resultSet.getString(2));
+                listDepartments.add(department);
+            }
+            preparedStatement.close();
+            return listDepartments;
+        } catch (SQLException e) {
+            e.getMessage();
         }
-        return listDepartments;
+        return null;
     }
 }
