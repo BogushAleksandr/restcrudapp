@@ -168,10 +168,11 @@ public class EmployeeRepository {
                 Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2),
                         resultSet.getBoolean(3),
                         resultSet.getInt(4));
+                preparedStatement.close();
                 return employee;
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         }
         return null;
     }

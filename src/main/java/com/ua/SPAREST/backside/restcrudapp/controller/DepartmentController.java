@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.SQLException;
 import java.util.List;
 
-@Api(value = "Department Controller", description = "Controller for Test check of department by id and View all departments")
+@Api(value = "Department Controller", description = "Controller for check of department by id and view all departments")
 @RestController
 @RequestMapping(path = "/department")
 public class DepartmentController {
@@ -20,7 +20,7 @@ public class DepartmentController {
     @Autowired
     private DepartmentsRepository departmentsRepository;
 
-    @ApiOperation(value = "Test check of department by id")
+    @ApiOperation(value = "Check of department by id")
     @GetMapping(path = "/wel")
     public Department welcome() throws SQLException {
         return departmentsRepository.findByPk(2);

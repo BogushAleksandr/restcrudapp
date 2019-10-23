@@ -38,8 +38,6 @@ public class EmployeeController {
     @ApiOperation(value = "Create Employee")
     @PostMapping("/createEmployee")
     public Employee createEmployee(@RequestBody Employee employee) throws SQLException {
-        // System.out.println(employee.getFirstName());
-
         return employeeRepository.createEmployee(employee);
     }
 
@@ -52,7 +50,7 @@ public class EmployeeController {
     @ApiOperation(value = "Search Employee")
     @GetMapping("/search")
     public List<Employee> searchEmployee(@RequestParam String name) {
-        if (name.isBlank()) {
+        if (name.isEmpty()) {
             return null;
         } else
             return employeeRepository.searchNameEmployee(name);
