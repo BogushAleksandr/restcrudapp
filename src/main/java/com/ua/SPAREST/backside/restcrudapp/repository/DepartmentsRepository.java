@@ -2,7 +2,6 @@ package com.ua.SPAREST.backside.restcrudapp.repository;
 
 import com.ua.SPAREST.backside.restcrudapp.config.SqlExecutor;
 import com.ua.SPAREST.backside.restcrudapp.entity.Department;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -15,8 +14,11 @@ import java.util.List;
 @Repository
 public class DepartmentsRepository {
 
-    @Autowired
-    private SqlExecutor sqlExecutor;
+    private final SqlExecutor sqlExecutor;
+
+    public DepartmentsRepository(SqlExecutor sqlExecutor) {
+        this.sqlExecutor = sqlExecutor;
+    }
 
     public Department findByPk(int pk) throws SQLException {
         try {

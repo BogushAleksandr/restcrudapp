@@ -4,7 +4,6 @@ import com.ua.SPAREST.backside.restcrudapp.entity.Employee;
 import com.ua.SPAREST.backside.restcrudapp.repository.EmployeeRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -14,8 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/emp")
 public class EmployeeController {
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+
+    public EmployeeController(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     @ApiOperation(value = "Check of employee by id")
     @GetMapping("/{id}")
