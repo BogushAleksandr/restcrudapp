@@ -1,3 +1,4 @@
+# REST app
 "Installation"
 
 1) git clone https://github.com/BogushAleksandr/restcrudapp.git && cd restcrudapp
