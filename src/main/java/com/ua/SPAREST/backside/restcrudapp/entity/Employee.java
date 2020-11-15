@@ -3,6 +3,12 @@ package com.ua.SPAREST.backside.restcrudapp.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * @author Bogush Aleksandr
+ * @version 1.0
+ * @since 15-11-2020
+ */
+
 @ApiModel(description = "All details about the Employee. ")
 public class Employee {
     @ApiModelProperty(notes = "ID of Employee", name = "id")

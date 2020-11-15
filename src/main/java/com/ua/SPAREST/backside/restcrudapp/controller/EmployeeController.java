@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * @author Bogush Aleksandr
+ * @version 1.0
+ * @since 15-11-2020
+ */
+
 @Api(value = "Employee Controller", description = "Controller for Employee")
 @RestController
 @RequestMapping(path = "/emp")

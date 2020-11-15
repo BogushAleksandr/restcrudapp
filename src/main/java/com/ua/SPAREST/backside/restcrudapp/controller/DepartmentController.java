@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * @author Bogush Aleksandr
+ * @version 1.0
+ * @since 15-11-2020
+ */
+
 @Api(value = "Department Controller", description = "Controller for check of department by id and view all departments")
 @RestController
 @RequestMapping(path = "/department")
